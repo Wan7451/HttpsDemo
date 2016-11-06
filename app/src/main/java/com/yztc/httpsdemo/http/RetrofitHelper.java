@@ -66,6 +66,7 @@ public class RetrofitHelper {
         });
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+        //公共参数
         BasicParamsInterceptor basicParamsInterceptor=new BasicParamsInterceptor.Builder()
                 .addQueryParam("basicparama1","aaa")
                 .addQueryParam("basicparama2","bbb")
