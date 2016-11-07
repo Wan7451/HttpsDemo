@@ -36,6 +36,7 @@ public class BasicParamsInterceptor implements Interceptor {
 
     }
 
+    //拦截
     @Override
     public Response intercept(Chain chain) throws IOException {
 
@@ -85,7 +86,7 @@ public class BasicParamsInterceptor implements Interceptor {
                 requestBuilder.post(RequestBody.create(MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8"), postBodyString));
             }
         }
-
+        //加上公共参数的Request对象
         request = requestBuilder.build();
         return chain.proceed(request);
     }

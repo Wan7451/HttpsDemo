@@ -26,6 +26,7 @@ public class RewriteCacheControlInterceptor implements Interceptor {
         Request request = chain.request();
         if(!NetUtils.isConnected()){
             request = request.newBuilder()
+                    //强制本地取缓存
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build();
         }

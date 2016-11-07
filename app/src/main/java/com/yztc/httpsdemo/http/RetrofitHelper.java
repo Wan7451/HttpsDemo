@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitHelper {
 
-    public static final String BASE_URL="https://10.0.14.61:8443/MyWeb/";
+    public static final String BASE_URL="https://10.0.158.192:8443/MyWeb/";
 
     public static final String TAG ="======";
 
