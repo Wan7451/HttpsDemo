@@ -4,7 +4,7 @@
 
 使用技术：
 
-    Retrofit + Okhttp + RxJava
+    Https + Retrofit + Okhttp + RxJava
     
     
 
