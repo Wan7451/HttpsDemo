@@ -20,9 +20,12 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         this.context = context;
     }
 
+    //失败的时候回调
     @Override
     public void onError(Throwable e) {
+        //统一处理异常
         if (e instanceof ExceptionHandle.ResponeThrowable) {
+            //回调给Activity
             onError((ExceptionHandle.ResponeThrowable) e);
         } else {
             onError(new ExceptionHandle.ResponeThrowable(e, ExceptionHandle.ERROR.UNKNOWN));
@@ -30,22 +33,25 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     }
 
 
+    //开始的时候回调
     @Override
     public void onStart() {
         super.onStart();
-
         if (!NetUtils.isConnected()) {
             onError(
                     new ExceptionHandle.ResponeThrowable(
                             new Throwable("网络没有连接,请打开网路"),
                             ExceptionHandle.ERROR.NETWORD_ERROR));
         } else {
+            //网络操作，显示对话框
             DialogHelper.showProgressDlg(context, "网络加载中....");
         }
     }
 
+    //完成是回调
     @Override
     public void onCompleted() {
+        //隐藏对话框
         DialogHelper.stopProgressDlg();
     }
 

@@ -32,9 +32,9 @@ public class HttpMethod {
 
     public Observable register(String username, String passwprd){
        return  api.register(username, passwprd)
-                .delay(1, TimeUnit.SECONDS)
-                .compose(schedulersTransformer())
-                .compose(transformer());
+                .delay(1, TimeUnit.SECONDS)//延迟1S执行网络操作
+                .compose(schedulersTransformer())//线程调度
+                .compose(transformer());//处理 baseResponse
     }
 
     public Observable registerGet(String username, String passwprd){
@@ -53,14 +53,15 @@ public class HttpMethod {
             @Override
             public Object call(Object observable) {
                 return ((Observable) observable)
-                        .map(new HandleFuc<T>())
-                        .onErrorResumeNext(new HttpResponseFunc<T>());
+                        .map(new HandleFuc<T>())//数据类型转换，取出真正的业务数据
+                        .onErrorResumeNext(new HttpResponseFunc<T>());//处理异常
             }
         };
     }
 
     private static class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
         @Override public Observable<T> call(Throwable t) {
+            //发错错误的 Observable
             return Observable.error(ExceptionHandle.handleException(t));
         }
     }
@@ -68,7 +69,9 @@ public class HttpMethod {
     private static class HandleFuc<T> implements Func1<BaseResponse<T>, T> {
         @Override
         public T call(BaseResponse<T> response) {
-            if (!response.isOk()) throw new RuntimeException(response.getStatus() + "" + response.getMsg() != null ? response.getMsg(): "");
+            //当前业务操作是否成功
+            if (!response.isOk())
+                throw new RuntimeException(response.getStatus() + "" + response.getMsg() != null ? response.getMsg(): "");
             return response.getData();
         }
     }

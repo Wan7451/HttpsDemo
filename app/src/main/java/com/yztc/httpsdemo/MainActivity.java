@@ -42,17 +42,24 @@ public class MainActivity extends AppCompatActivity {
 //                });
 
 
-        Observable register = HttpMethod.getInstance().register("a", "b");
+        Observable register = HttpMethod.
+                getInstance().
+                register("a", "b");
 
 
         Subscription subscribe = register.subscribe(new BaseSubscriber<String>(this) {
+
+            //在执行完成回调
             @Override
             public void onNext(String s) {
                 Log.i("======", s);
             }
 
+            //自己处理的错误回调
             @Override
             public void onError(ExceptionHandle.ResponeThrowable e) {
+                //1 Retrofit 抛出异常  网络异常
+                //2 自己封装的异常   业务的上的异常
                 Log.i("======", e.getMessage());
             }
 

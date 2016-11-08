@@ -7,6 +7,8 @@ package com.yztc.httpsdemo.http;
 
 public class BaseResponse<T> {
 
+    // {status:1,result:{},msg:""}
+
     private int status;
     private T result;
     private String msg;
