@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 import com.yztc.httpsdemo.App;
+import com.yztc.httpsdemo.config.UrlConfig;
 import com.yztc.httpsdemo.utils.FileUtils;
 
 import java.io.File;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitHelper {
 
-    public static final String BASE_URL="https://10.0.158.192:8443/MyWeb/";
+
 
     public static final String TAG ="======";
 
@@ -41,7 +42,7 @@ public class RetrofitHelper {
 
     private RetrofitHelper() {
          retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(UrlConfig.BASE_URL)
                 .client(client())
                  //.serializeNulls  解决 gson  null值不进行转换问题
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().serializeNulls().create()))
